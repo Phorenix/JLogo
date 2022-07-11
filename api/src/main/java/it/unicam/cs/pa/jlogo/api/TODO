@@ -1,4 +1,2 @@
 - Creare un qualcosa come un PolygonBuilder o DrawingBuilder per costruire e controllare la creazione di poligoni.
 - Questione dei double (epsilon) sul record Coordinate.
-
-- metodo clear() in più

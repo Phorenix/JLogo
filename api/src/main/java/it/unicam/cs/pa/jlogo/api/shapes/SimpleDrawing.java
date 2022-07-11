@@ -1,48 +1,42 @@
 package it.unicam.cs.pa.jlogo.api.shapes;
 
+import it.unicam.cs.pa.jlogo.api.Color;
 import it.unicam.cs.pa.jlogo.api.RGBColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is a simple implementation of the interface {@link Drawing}.
+ */
 public class SimpleDrawing implements Drawing {
 
-    private final double width;
-
-    private final double height;
-
+    // Where will be stored the shapes
     private final List<Shape> shapes;
 
-    private RGBColor backgroundColor;
+    // Background color of the drawing
+    private Color backgroundColor;
 
-    public SimpleDrawing(double width, double height, List<Shape> shapes, RGBColor backgroundColor) {
-        this.width = width;
-        this.height = height;
+    public SimpleDrawing(List<Shape> shapes, Color backgroundColor) {
         this.shapes = shapes;
         this.backgroundColor = backgroundColor;
     }
 
-    public SimpleDrawing(double width, double height) {
-        this(width, height, new ArrayList<>(), new RGBColor(0, 0, 0));
+    /**
+     * This constructor calls the default one, passing a new empty ArrayList and initialize the background color
+     * with the color White.
+     */
+    public SimpleDrawing() {
+        this(new ArrayList<>(), new RGBColor(0, 0, 0));
     }
 
     @Override
-    public double getHeight() {
-        return this.height;
-    }
-
-    @Override
-    public double getWidth() {
-        return this.width;
-    }
-
-    @Override
-    public RGBColor getBackgroundColor() {
+    public Color getBackgroundColor() {
         return this.backgroundColor;
     }
 
     @Override
-    public void setBackgroundColor(RGBColor color) {
+    public void setBackgroundColor(Color color) {
         this.backgroundColor = color;
     }
 
@@ -51,15 +45,16 @@ public class SimpleDrawing implements Drawing {
         return this.shapes;
     }
 
+    // TODO implement method
     @Override
     public void addNewShape(Shape shape) {
         this.shapes.add(shape);
     }
 
     @Override
-    public void removeShape(Shape shape) {
+    public void removeShape(Line line) {
         // TODO Not sure
-        this.shapes.remove(shape);
+        this.shapes.remove(line);
     }
 
     @Override

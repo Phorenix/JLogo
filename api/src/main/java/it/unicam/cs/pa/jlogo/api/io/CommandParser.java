@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CommandParser {
 
-    List<Command> parser(String content);
+    List<Command> parse(String content);
 
 }

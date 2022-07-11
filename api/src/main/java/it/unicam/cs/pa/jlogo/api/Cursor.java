@@ -23,27 +23,27 @@ public interface Cursor {
     void setPlot(boolean plot);
 
     /**
-     * Returns the {@link RGBColor} of the line printed by the cursor
+     * Returns the {@link Color} of the line printed by the cursor
      *
-     * @return the {@link RGBColor} of the line printed by the cursor
+     * @return the {@link Color} of the line printed by the cursor
      */
-    RGBColor getLineColor();
+    Color getLineColor();
 
     /**
      * Change the color of the printed line
      */
-    void setPenColor(RGBColor color);
+    void setPenColor(Color color);
 
     /**
-     * Returns the {@link RGBColor} of the area when closed
+     * Returns the {@link Color} of the area when closed
      *
-     * @return the {@link RGBColor} of the area when closed
+     * @return the {@link Color} of the area when closed
      */
-    RGBColor getAreaColor();
+    Color getAreaColor();
 
     /**
      * Change the color of the area when closed
      */
-    void setFillColor(RGBColor color);
+    void setFillColor(Color color);
 
 }

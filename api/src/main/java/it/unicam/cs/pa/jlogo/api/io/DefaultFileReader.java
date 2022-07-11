@@ -10,4 +10,5 @@ public class DefaultFileReader implements FileReader {
     public String readStringFromFile(Path filePath) throws IOException {
         return Files.readString(filePath);
     }
+
 }

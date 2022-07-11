@@ -1,16 +1,40 @@
 package it.unicam.cs.pa.jlogo.api.shapes;
 
+import it.unicam.cs.pa.jlogo.api.Color;
 import it.unicam.cs.pa.jlogo.api.Coordinate;
-import it.unicam.cs.pa.jlogo.api.RGBColor;
 
+/**
+ * This interface represents a Line to draw in the drawing.
+ * It will also be used to form a Figure.
+ */
 public interface Line extends Shape {
 
-    Coordinate getStartingPoint();
+    /**
+     * Returns the starting coordinate of the line
+     *
+     * @return the starting coordinate of the line
+     */
+    Coordinate startingPoint();
 
-    Coordinate getEndingPoint();
+    /**
+     * Returns the ending coordinate of the line
+     *
+     * @return the ending coordinate of the line
+     */
+    Coordinate endingPoint();
 
-    RGBColor getColor();
+    /**
+     * Returns the color of the line
+     *
+     * @return the color of the line
+     */
+    Color color();
 
-    double getSize();
+    /**
+     * Returns the size of the stroke
+     *
+     * @return the size of the stroke
+     */
+    int size();
 
 }

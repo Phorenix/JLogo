@@ -1,24 +1,32 @@
 package it.unicam.cs.pa.jlogo.api.shapes;
 
+import it.unicam.cs.pa.jlogo.api.Color;
 import it.unicam.cs.pa.jlogo.api.Coordinate;
-import it.unicam.cs.pa.jlogo.api.RGBColor;
 
 import java.util.Objects;
 
-// TODO decide if converts it into a Record
-
-public class StraightLine implements Line {
-
-    private final RGBColor color;
-
-    private final Coordinate startingPoint;
-
-    private final Coordinate endingPoint;
-
-    private final int size;
+/**
+ * This record represents a straight line in the drawing.
+ * (This is also a record because once created it shouldn't be changed anymore)
+ *
+ * @param color color of the line
+ * @param startingPoint starting coordinate of the line
+ * @param endingPoint ending coordinate of the line
+ * @param size size of the stroke of the line
+ */
+public record StraightLine(Color color, Coordinate startingPoint, Coordinate endingPoint, int size) implements Line {
 
     // TODO In teoria i controlli si possono togliere
-    public StraightLine(RGBColor color, Coordinate startingPoint, Coordinate endingPoint, int size) {
+
+    /**
+     * In the constructor are executed simple checks for the passed arguments.
+     *
+     * @param color color of the line
+     * @param startingPoint starting coordinate of the line
+     * @param endingPoint ending coordinate of the line
+     * @param size size of the stroke of the line
+     */
+    public StraightLine(Color color, Coordinate startingPoint, Coordinate endingPoint, int size) {
         if (size < 1)
             throw new IllegalArgumentException("The size of the stroke needs to be 1 or greater");
 
@@ -26,25 +34,5 @@ public class StraightLine implements Line {
         this.startingPoint = Objects.requireNonNull(startingPoint);
         this.endingPoint = Objects.requireNonNull(endingPoint);
         this.size = size;
-    }
-
-    @Override
-    public Coordinate getStartingPoint() {
-        return this.startingPoint;
-    }
-
-    @Override
-    public Coordinate getEndingPoint() {
-        return this.endingPoint;
-    }
-
-    @Override
-    public RGBColor getColor() {
-        return this.color;
-    }
-
-    @Override
-    public double getSize() {
-        return this.size;
     }
 }

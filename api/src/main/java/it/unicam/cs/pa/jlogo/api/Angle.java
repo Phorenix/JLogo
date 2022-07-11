@@ -1,38 +1,39 @@
 package it.unicam.cs.pa.jlogo.api;
 
 /**
- * Class representing an Angle.
+ * This interface has the responsibility to represent an angle in the space (that will be used as the direction of the
+ * cursor).
  * In this implementation the angle is an int.
- * This class also is responsible for rotating the angle (left and right) with the appropriate methods.
+ * This interface also is responsible for rotating the angle (left and right) with the appropriate methods.
  */
-public final class Angle {
-    private int angle;
+public interface Angle {
 
-    public Angle(int angle) {
-        if (angle < 0 || angle > 360) {
-            throw new IllegalArgumentException("Invalid argument, angle should positive and less than 360");
-        }
-        this.angle = angle;
-    }
+    /**
+     * Returns the complementary angle (that is angle + 180) of the current one.
+     *
+     * @return the complementary angle (that is angle + 180) of the current one.
+     */
+    Angle getComplementaryAngle();
 
-    public Angle getComplementaryAngle() {
-        return new Angle((this.angle + 180) % 360);
-    }
+    /**
+     * Returns the angle (that is an integer)
+     *
+     * @return the angle
+     */
+    int getAngle();
 
-    public int getAngle() {
-        return angle;
-    }
+    /**
+     * Rotate the angle "left" (so counterclockwise)
+     *
+     * @param argAngle how much to rotate the angle left
+     */
+    void leftRotation(Angle argAngle);
 
-    public void leftRotation(Angle argAngle) {
-        this.rotation(argAngle.getAngle());
-    }
-
-    public void rightRotation(Angle argAngle) {
-        this.rotation(-argAngle.getAngle());
-    }
-
-    private void rotation(int argAngle) {
-        this.angle = (this.angle + argAngle) % 360;
-    }
+    /**
+     * Rotate the angle "right" (so clockwise)
+     *
+     * @param argAngle how much to rotate the angle right
+     */
+    void rightRotation(Angle argAngle);
 
 }

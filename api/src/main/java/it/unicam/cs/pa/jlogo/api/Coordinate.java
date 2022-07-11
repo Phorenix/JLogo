@@ -1,14 +1,23 @@
 package it.unicam.cs.pa.jlogo.api;
 
-// TODO check if it needs to be changed to class and use the epsilon thing
+/**
+ * This interface represents a simple Coordinate in the bi-dimensional space of a Logo application.
+ * In this implementation of a coordinate, both values are double.
+ */
+public interface Coordinate {
 
-public record Coordinate(double x, double y) {
+    /**
+     * Returns the x of the coordinate
+     *
+     * @return the x of the coordinate
+     */
+    double x();
 
-    public Coordinate {
-
-        if (x < 0 || y < 0)
-            throw new IllegalArgumentException("Coordinate's x and y needs to be positive");
-
-    }
+    /**
+     * Returns the y of the coordinate
+     *
+     * @return the y of the coordinate
+     */
+    double y();
 
 }
