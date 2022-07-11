@@ -35,16 +35,11 @@ public interface Drawing {
 
     /**
      * This method add new shape to the drawing
+     * (The shape can either be a Line or a Figure)
      *
      * @param shape to add
      */
     void addNewShape(Shape shape);
-
-    /**
-     *
-     * @param line
-     */
-    void removeShape(Line line);
 
     /**
      * This method clears the shapes in the drawing, but it doesn't clear the previous configurations

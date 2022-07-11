@@ -9,8 +9,8 @@ public interface ShapeWriter {
 
     String stringOf(Shape shape);
 
-    default String stringOf(List<Shape> shapeList) {
-        return shapeList.stream().map(this::stringOf).collect(Collectors.joining("\n"));
+    default String stringOf(List<Shape> shapesList) {
+        return shapesList.stream().map(this::stringOf).collect(Collectors.joining("\n"));
     }
 
 }

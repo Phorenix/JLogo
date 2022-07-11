@@ -1,14 +1,16 @@
 package it.unicam.cs.pa.jlogo.api.io;
 
+import it.unicam.cs.pa.jlogo.api.commands.Command;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
-public class DefaultFileReader implements FileReader {
+public record DefaultFileReader(CommandParser parser) implements FileReader {
 
     @Override
-    public String readStringFromFile(Path filePath) throws IOException {
-        return Files.readString(filePath);
+    public List<Command> readCommandsFromFile(Path filePath) throws IOException {
+        return this.parser.parse(Files.readString(filePath));
     }
-
 }
