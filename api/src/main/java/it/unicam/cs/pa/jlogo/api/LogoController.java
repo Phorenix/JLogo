@@ -1,10 +1,12 @@
 package it.unicam.cs.pa.jlogo.api;
 
-import it.unicam.cs.pa.jlogo.api.commands.Command;
+import it.unicam.cs.pa.jlogo.api.model.GridSpace;
+import it.unicam.cs.pa.jlogo.api.model.Space;
+import it.unicam.cs.pa.jlogo.api.model.commands.Command;
 import it.unicam.cs.pa.jlogo.api.executor.CommandExecutor;
 import it.unicam.cs.pa.jlogo.api.executor.SimpleCommandExecutor;
 import it.unicam.cs.pa.jlogo.api.io.*;
-import it.unicam.cs.pa.jlogo.api.shapes.Drawing;
+import it.unicam.cs.pa.jlogo.api.model.shapes.Drawing;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +47,7 @@ public class LogoController {
         this.currentCommandIndex = 0;
     }
 
-    public void readCommandsFromFile(File file) throws IOException {
+    public void readCommandsFromFile(File file) throws IOException, InvalidNumberArgumentsException, InvalidCommandException {
         this.commandsList = this.fileReader.readCommandsFromFile(file);
     }
 
@@ -56,6 +58,18 @@ public class LogoController {
     public void executeNextCommand() {
         this.commandExecutor.apply(this.commandsList.get(currentCommandIndex));
         this.currentCommandIndex++;
+    }
+
+    public void executeAllCommands() {
+        for (Command command : this.commandsList) {
+            this.commandExecutor.apply(command);
+        }
+        currentCommandIndex = this.commandsList.size() - 1;
+    }
+
+    public void clear() {
+        this.drawing.clear();
+        currentCommandIndex = 0;
     }
 
 }

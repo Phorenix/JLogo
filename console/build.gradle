@@ -1,0 +1,9 @@
+plugins {
+    id 'application'
+}
+
+dependencies {
+    implementation(project(path: ':api'))
+}
+
+mainClassName = 'it.unicam.cs.pa.jlogo.console.ConsoleApp'

@@ -1,15 +1,20 @@
 package it.unicam.cs.pa.jlogo.api.executor;
 
-import it.unicam.cs.pa.jlogo.api.*;
-import it.unicam.cs.pa.jlogo.api.shapes.Drawing;
-import it.unicam.cs.pa.jlogo.api.commands.*;
-import it.unicam.cs.pa.jlogo.api.shapes.SimpleDrawing;
-import it.unicam.cs.pa.jlogo.api.shapes.StraightLine;
+import it.unicam.cs.pa.jlogo.api.model.Angle;
+import it.unicam.cs.pa.jlogo.api.model.Coordinate;
+import it.unicam.cs.pa.jlogo.api.model.Coordinate2D;
+import it.unicam.cs.pa.jlogo.api.model.Space;
+import it.unicam.cs.pa.jlogo.api.model.shapes.Drawing;
+import it.unicam.cs.pa.jlogo.api.model.commands.*;
+import it.unicam.cs.pa.jlogo.api.model.shapes.SimpleDrawing;
+import it.unicam.cs.pa.jlogo.api.model.shapes.StraightLine;
 
 import java.util.Objects;
 
 /**
  * Default implementation of a {@link CommandExecutor}
+ *
+ * @author Luca Bianchi
  */
 public class SimpleCommandExecutor implements CommandExecutor {
 
@@ -18,9 +23,6 @@ public class SimpleCommandExecutor implements CommandExecutor {
 
     // Associated space, where the executor will execute the commands
     private final Space space;
-
-    // TODO cambia la posizione di size
-    private int size;
 
     public SimpleCommandExecutor(Drawing drawing, Space space) {
         this.drawing = Objects.requireNonNull(drawing);
@@ -73,7 +75,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
      * This method also calls the method of the drawing to add the new line that has been drawn by the cursor if it is
      * plotting
      *
-     * @param angle direction of the movement
+     * @param angle    direction of the movement
      * @param distance of the movement
      */
     private void computeMovementCommand(Angle angle, double distance) {
@@ -82,9 +84,11 @@ public class SimpleCommandExecutor implements CommandExecutor {
 
         this.space.moveCursor(correctEndingPoint);
 
-        if(this.space.getCursor().isPlotting())
-            this.drawing.addNewShape(
-                    new StraightLine(this.space.getCursor().getLineColor(), startingPoint, correctEndingPoint, this.size));
+        if (this.space.getCursor().isPlotting())
+            this.drawing.addNewLine(
+                    new StraightLine(this.space.getCursor().getLineColor(), startingPoint, correctEndingPoint, this.space.getCursor().getPenSize()),
+                    this.space.getCursor().getFillColor()
+            );
     }
 
     /**
@@ -92,13 +96,13 @@ public class SimpleCommandExecutor implements CommandExecutor {
      * of the movement and the distance of the movement
      *
      * @param currentCursorPosition current position of the cursor in the space
-     * @param currentAngle direction of the movement
-     * @param distance of the movement
+     * @param currentAngle          direction of the movement
+     * @param distance              of the movement
      * @return the ending point of the relative movement command
      */
     private Coordinate calculateNewCoordinate(Coordinate currentCursorPosition, Angle currentAngle, double distance) {
-        double coordinateX = currentCursorPosition.x() + (distance * Math.cos(currentAngle.getAngle()));
-        double coordinateY = currentCursorPosition.y() + (distance * Math.sin(currentAngle.getAngle()));
+        double coordinateX = currentCursorPosition.x() + (distance * Math.cos(Math.toRadians(currentAngle.getAngle())));
+        double coordinateY = currentCursorPosition.y() + (distance * Math.sin(Math.toRadians(currentAngle.getAngle())));
 
         return clipCoordinateValues(coordinateX, coordinateY);
     }
@@ -159,11 +163,18 @@ public class SimpleCommandExecutor implements CommandExecutor {
 
     /**
      * Utility method to execute the homeCommand passed
+     * (If the cursor is plotting then it will also write a new Line)
      *
      * @param homeCommand home command to execute
      */
     private void applyHomeCommand(HomeCommand homeCommand) {
-        this.space.moveCursorToHome();
+        if (this.space.getCursor().isPlotting())
+            this.drawing.addNewLine(
+                    new StraightLine(this.space.getCursor().getLineColor(), this.space.getCursorPosition(),
+                            this.space.getHome(), this.space.getCursor().getPenSize()), this.space.getCursor().getFillColor()
+            );
+
+        this.space.moveCursor(this.space.getHome());
     }
 
     /**
@@ -205,18 +216,25 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * @param setPenSizeCommand
+     * This method set the pen size to the given size passed with the set pen size command
+     *
+     * @param setPenSizeCommand set pen size command that has the new size of the pen in it
      */
     private void applySetPenSizeCommand(SetPenSizeCommand setPenSizeCommand) {
-        // TODO who has the size?
+        this.space.getCursor().setPenSize(setPenSizeCommand.size());
     }
 
     /**
-     * @param repeatCommand
+     * This method executes for n times all the commands written in the repeatCommand, just by iterating for n times
+     * calling the method apply()
+     *
+     * @param repeatCommand repeat command to execute (that has a list of commands and an integer for the number
+     *                      of repetitions)
      */
     private void applyRepeatCommand(RepeatCommand repeatCommand) {
         for (int i = 0; i < repeatCommand.n(); i++) {
-            this.apply(repeatCommand.command());
+            for (Command command : repeatCommand.commands())
+                this.apply(command);
         }
     }
 }
