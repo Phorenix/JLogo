@@ -14,7 +14,7 @@ public record RepeatCommand(int n, List<Command> commands) implements Command {
 
     /**
      * In the constructor is checked if the number of times to execute the given commands is less than 0, and
-     * if the given commands are null.
+     * if the given commands are null (or empty).
      *
      * @param n number of times to execute the command
      * @param commands commands to execute
@@ -23,8 +23,8 @@ public record RepeatCommand(int n, List<Command> commands) implements Command {
         if (n < 0)
             throw new IllegalArgumentException("The number of repetitions needs to be positive");
 
-        if (commands == null)
-            throw new NullPointerException("The given commands must not be Null");
+        if (commands == null || commands.isEmpty())
+            throw new NullPointerException("The given commands must not be Null or empty");
     }
 
 }

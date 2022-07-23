@@ -8,5 +8,5 @@
  */
 
 rootProject.name = 'it.unicam.cs.pa.jlogo'
-include('app', 'api', 'utilities', 'gui', 'console')
+include('api', 'gui', 'console')
 

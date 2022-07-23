@@ -1,7 +1,7 @@
 package it.unicam.cs.pa.jlogo.api.model;
 
 /**
- * This interface represents a classic RGB color (that will be used for a generic Shape)
+ * This interface represents a classic RGB color
  *
  * @author Luca Bianchi
  */

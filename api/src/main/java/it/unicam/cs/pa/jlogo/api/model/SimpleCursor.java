@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jlogo.api.model;
 import java.util.Objects;
 
 /**
- * Simple implementation of a cursor for a space.
+ * Simple implementation of a {@link Cursor} for a space.
  *
  * @author Luca Bianchi
  */
@@ -73,6 +73,19 @@ public class SimpleCursor implements Cursor {
     @Override
     public void setPenSize(int penSize) {
         this.penSize = penSize;
+    }
+
+    /*
+     * Override of equals method, otherwise the default implementation will just check if the 2 objects are
+     * the same in memory.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (Cursor) obj;
+        return this.getPenSize() == that.getPenSize() && this.isPlotting() == that.isPlotting() &&
+                this.getFillColor().equals(that.getFillColor()) && this.getLineColor().equals(that.getLineColor());
     }
 
 }

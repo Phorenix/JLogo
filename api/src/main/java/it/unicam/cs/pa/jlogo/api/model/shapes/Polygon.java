@@ -10,21 +10,25 @@ import java.util.List;
  * Is a record because once passed the lines of the polygon, they can't be changed.
  *
  * @param lines sequence of lines that makes the polygon
+ * @param color color of the closed area
  *
  * @author Luca Bianchi
  */
 public record Polygon(List<Line> lines, Color color) implements Figure {
 
     /**
-     * Check if the list contacting the lines is null or if the passed color is null
+     * Check if the list containing the lines is null (or empty) or if the passed color is null
      *
      * @param lines list containing the lines
      * @param color color of the closed area
      */
     public Polygon {
-        if(lines == null || color == null) {
+        if (lines == null || color == null) {
             throw new NullPointerException("Arguments of a new Polygon can't be null");
         }
+
+        if (lines.isEmpty())
+            throw new IllegalArgumentException("The given list of lines can't be empty");
     }
 
     @Override

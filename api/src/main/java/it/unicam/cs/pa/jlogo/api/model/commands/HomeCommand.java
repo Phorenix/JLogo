@@ -1,7 +1,5 @@
 package it.unicam.cs.pa.jlogo.api.model.commands;
 
-import it.unicam.cs.pa.jlogo.api.model.Angle;
-
 /**
  * This interface has the responsibility to represent the "Home" command.
  *
@@ -15,7 +13,6 @@ public class HomeCommand implements Command {
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        return obj.getClass() == this.getClass();
+        return obj != null && obj.getClass() == this.getClass();
     }
 }

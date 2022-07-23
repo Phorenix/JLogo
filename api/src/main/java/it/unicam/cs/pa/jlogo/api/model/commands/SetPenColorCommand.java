@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jlogo.api.model.commands;
 import it.unicam.cs.pa.jlogo.api.model.Color;
 
 /**
- * This record represents a "SetPenColor" command, that set the color of the next new lines that will be created.
+ * This record represents a "SetPenColor" command, that set the {@link Color} of the next new lines that will be created.
  *
  * @param color new color of the next lines
  *

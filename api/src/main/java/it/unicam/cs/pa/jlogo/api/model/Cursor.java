@@ -2,7 +2,7 @@ package it.unicam.cs.pa.jlogo.api.model;
 
 /**
  * This interface represents a Cursor in a Logo application, so it has the responsibility to manage the color of
- * the printing line (and size) and of the closed area. Also check if the cursor is printing or not.
+ * the printing line (and size) and of the closed area. Also keeps track if the cursor is printing or not.
  *
  * @author Luca Bianchi
  */
@@ -30,9 +30,9 @@ public interface Cursor {
     Color getLineColor();
 
     /**
-     * Change the color of the printed line
+     * Change the {@link Color of the printed line
      *
-     * @param color new color of the next lines
+     * @param color new {@link Color} of the next lines
      */
     void setPenColor(Color color);
 
@@ -44,9 +44,9 @@ public interface Cursor {
     Color getFillColor();
 
     /**
-     * Change the color of the area when closed
+     * Change the {@link Color} of the area when closed
      *
-     * @param color new color to fill a closed area
+     * @param color new {@link Color} to fill a closed area
      */
     void setFillColor(Color color);
 

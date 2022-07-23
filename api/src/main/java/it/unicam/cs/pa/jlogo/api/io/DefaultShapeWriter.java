@@ -10,13 +10,13 @@ import it.unicam.cs.pa.jlogo.api.model.shapes.Shape;
  * @author Luca Bianchi
  */
 public class DefaultShapeWriter implements ShapeWriter {
+
     @Override
     public String stringOf(Shape shape) {
-        // Check if the given shape is an instance of a Line or a Figure
+        // Checks if the given shape is an instance of a Line or a Figure
         if (shape instanceof Line line) return lineStringRepresentation(line);
         else if (shape instanceof Figure figure) return figureStringRepresentation(figure);
-        else throw new IllegalArgumentException();
-        //else throw new InvalidShapeException("The shape must be a line or a figure");
+        else throw new IllegalArgumentException("Given is shape is unknown");
     }
 
     /**

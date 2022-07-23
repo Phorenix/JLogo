@@ -43,21 +43,19 @@ public class SimpleCommandExecutor implements CommandExecutor {
         // Check every possible instance of the given command, and based on which one it is, calls the related utility method.
         if (command instanceof MovementCommand movementCommand) applyMovementCommand(movementCommand);
         else if (command instanceof RotateCommand rotateCommand) applyRotateCommand(rotateCommand);
-        else if (command instanceof ClearScreenCommand clearScreenCommand) applyClearScreenCommand(clearScreenCommand);
-        else if (command instanceof HomeCommand homeCommand) applyHomeCommand(homeCommand);
+        else if (command instanceof ClearScreenCommand) applyClearScreenCommand();
+        else if (command instanceof HomeCommand) applyHomeCommand();
         else if (command instanceof PlotCommand plotCommand) applyPlotCommand(plotCommand);
         else if (command instanceof SetPenColorCommand setPenColorCommand) applySetPenColorCommand(setPenColorCommand);
-        else if (command instanceof SetFillColorCommand setFillColorCommand)
-            applySetFillColorCommand(setFillColorCommand);
-        else if (command instanceof SetScreenColorCommand setScreenColorCommand)
-            applySetScreenColorCommand(setScreenColorCommand);
+        else if (command instanceof SetFillColorCommand setFillColorCommand) applySetFillColorCommand(setFillColorCommand);
+        else if (command instanceof SetScreenColorCommand setScreenColorCommand) applySetScreenColorCommand(setScreenColorCommand);
         else if (command instanceof SetPenSizeCommand setPenSizeCommand) applySetPenSizeCommand(setPenSizeCommand);
         else if (command instanceof RepeatCommand repeatCommand) applyRepeatCommand(repeatCommand);
-        else throw new IllegalArgumentException();
+        else throw new IllegalArgumentException("Passed Command doesn't exist");
     }
 
     /**
-     * Utility method that also check the instance of given generic movement command passed
+     * Utility method that also checks the instance of given generic movement command passed
      *
      * @param movementCommand generic movement command to execute
      */
@@ -67,7 +65,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
         else if (movementCommand instanceof BackwardCommand)
             // If it's a BackwardCommand it passes to the method computeMovementCommand() the complementary angle
             computeMovementCommand(this.space.getCursorDirection().getComplementaryAngle(), movementCommand.distance());
-        else throw new IllegalArgumentException();
+        else throw new IllegalArgumentException("This movement command doesn't exist");
     }
 
     /**
@@ -108,7 +106,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * Utility method that based on the space's dimension and the given x and y of the coordinate, returns a new
+     * Utility method that based on the space's dimensions and the given x and y of the coordinate, returns a new
      * coordinate that is "clipped", meaning that doesn't go beyond its range.
      *
      * @param coordinateX x of the coordinate to clip
@@ -123,7 +121,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * Utility method that also check the instance of given generic rotation command passed
+     * Utility method that also checks the instance of given generic rotation command passed
      *
      * @param rotateCommand generic rotation command
      */
@@ -153,21 +151,17 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * Utility method to execute the clearScreenCommand passed
-     *
-     * @param clearScreenCommand clear screen command to execute
+     * Utility method to execute the Clear Screen Command passed
      */
-    private void applyClearScreenCommand(ClearScreenCommand clearScreenCommand) {
+    private void applyClearScreenCommand() {
         this.drawing.clear();
     }
 
     /**
-     * Utility method to execute the homeCommand passed
+     * Utility method to execute the Home Command
      * (If the cursor is plotting then it will also write a new Line)
-     *
-     * @param homeCommand home command to execute
      */
-    private void applyHomeCommand(HomeCommand homeCommand) {
+    private void applyHomeCommand() {
         if (this.space.getCursor().isPlotting())
             this.drawing.addNewLine(
                     new StraightLine(this.space.getCursor().getLineColor(), this.space.getCursorPosition(),
@@ -178,7 +172,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * Utility method that execute an instance of a plotCommand, and so just calls the setPlot() method of the cursor in
+     * Utility method that executes an instance of a plotCommand, and so just calls the setPlot() method of the cursor in
      * the space passing the boolean plot in the command.
      *
      * @param plotCommand plot command to execute
@@ -188,7 +182,8 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * Utility method to execute a setPenColorCommand, calling the method setPenColor() of the cursor in the space.
+     * Utility method to executes a setPenColorCommand, calling the method setPenColor() of the cursor in the space
+     * using the color given in the command.
      *
      * @param setPenColorCommand set pen color command to execute
      */
@@ -197,7 +192,8 @@ public class SimpleCommandExecutor implements CommandExecutor {
     }
 
     /**
-     * Utility method to execute a setFillColorCommand, calling the method setFillColor() of the cursor in the space.
+     * Utility method to execute a setFillColorCommand, calling the method setFillColor() of the cursor in the space and
+     * using the color in the given command.
      *
      * @param setFillColorCommand set fill color command to execute
      */
@@ -207,7 +203,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
 
     /**
      * Utility method to execute a setScreenColorCommand, calling the method setBackgroundColor() of the
-     * drawing associated in the executor.
+     * drawing associated in the executor using the color in the given command.
      *
      * @param setScreenColorCommand set screen color command to execute
      */
@@ -226,7 +222,7 @@ public class SimpleCommandExecutor implements CommandExecutor {
 
     /**
      * This method executes for n times all the commands written in the repeatCommand, just by iterating for n times
-     * calling the method apply()
+     * calling the method apply() for each command in the list of the given repeat command
      *
      * @param repeatCommand repeat command to execute (that has a list of commands and an integer for the number
      *                      of repetitions)

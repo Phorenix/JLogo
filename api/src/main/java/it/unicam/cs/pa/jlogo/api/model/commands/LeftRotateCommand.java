@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jlogo.api.model.commands;
 import it.unicam.cs.pa.jlogo.api.model.Angle;
 
 /**
- * This class represents a "Left" command (so it implements the interface RotateCommand).
+ * This class represents a "Left" command (so it implements the interface {@link RotateCommand}).
  *
  * @param angle the angle of the counterclockwise rotation
  *

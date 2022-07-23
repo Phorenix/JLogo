@@ -90,7 +90,7 @@ public class CommandParserTest {
 
     @Test
     public void shouldCreatedCommands() throws InvalidCommandException, InvalidNumberArgumentsException {
-        String content = "RIPETI 4 [ FORWARD 50 BACKWARD 50 ]\nCLEARSCREEN\nRIGHT 200";
+        String content = "RIPETI 4 [FORWARD 50 BACKWARD 50]\nCLEARSCREEN\nRIGHT 200";
         List<Command> shouldCreateCommands = new ArrayList<>();
         List<Command> repeatCommands = new ArrayList<>();
         repeatCommands.add(new ForwardCommand(50));
@@ -131,6 +131,30 @@ public class CommandParserTest {
         repeatCommands.add(new SetScreenColorCommand(new RGBColor(255, 255, 255)));
         repeatCommands.add(new SetPenColorCommand(new RGBColor(100, 100, 100)));
         shouldCreateCommands.add(new RepeatCommand(1, repeatCommands));
+        checkNewCreatedCommands(shouldCreateCommands, parser.parse(content));
+    }
+
+    @Test
+    public void shouldCreateNewRepeatCommandEvenWithoutSpace() throws InvalidCommandException, InvalidNumberArgumentsException {
+        String content = "RIPETI 4 [HOME]";
+        List<Command> shouldCreateCommands = new ArrayList<>();
+        List<Command> repeatCommands = new ArrayList<>();
+        repeatCommands.add(new HomeCommand());
+        shouldCreateCommands.add(new RepeatCommand(4, repeatCommands));
+        checkNewCreatedCommands(shouldCreateCommands, parser.parse(content));
+    }
+
+    @Test
+    public void shouldCreateMoreRepeatCommands() throws InvalidCommandException, InvalidNumberArgumentsException {
+        String content = "RIPETI 36 [RIPETI 90 [FORWARD 5 RIGHT 4] RIGHT 10]";
+        List<Command> shouldCreateCommands = new ArrayList<>();
+        List<Command> repeatCommands1 = new ArrayList<>();
+        repeatCommands1.add(new ForwardCommand(5));
+        repeatCommands1.add(new RightRotateCommand(new SimpleAngle(4)));
+        List<Command> repeatCommands2 = new ArrayList<>();
+        repeatCommands2.add(new RepeatCommand(90, repeatCommands1));
+        repeatCommands2.add(new RightRotateCommand(new SimpleAngle(10)));
+        shouldCreateCommands.add(new RepeatCommand(36, repeatCommands2));
         checkNewCreatedCommands(shouldCreateCommands, parser.parse(content));
     }
 

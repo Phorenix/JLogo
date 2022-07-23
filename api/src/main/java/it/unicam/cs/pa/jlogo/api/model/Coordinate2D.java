@@ -1,11 +1,12 @@
 package it.unicam.cs.pa.jlogo.api.model;
 
-import java.util.Objects;
-
 /**
- * Simple implementation of a 2D coordinate in the space, that implements the interface Coordinate
+ * Simple implementation of a 2D coordinate in the space, that implements the interface {@link Coordinate}
  *
  * @author Luca Bianchi
+ *
+ * @param x of the coordinate
+ * @param y of the coordinate
  */
 public record Coordinate2D(double x, double y) implements Coordinate {
     /**
@@ -21,12 +22,19 @@ public record Coordinate2D(double x, double y) implements Coordinate {
 
     }
 
+    /**
+     * This equals method checks that the given object (that must be a Coordinate) is equals to the current Coordinate
+     * but using a certain range of tolerance.
+     *
+     * @param obj   the reference object with which to compare
+     * @return true if the 2 coordinates are equals
+     */
     @Override
     public boolean equals(Object obj) {
         double epsilon = 0.00000000001;
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Coordinate2D) obj;
+        var that = (Coordinate) obj;
         return (Math.abs(this.x() - that.x()) < epsilon) && (Math.abs(this.y() - that.y()) < epsilon);
     }
 

@@ -9,9 +9,9 @@ package it.unicam.cs.pa.jlogo.api.model;
 public interface Space {
 
     /**
-     * Returns the cursor associated with the space
+     * Returns the {@link Cursor} associated with the space
      *
-     * @return the cursor associated with the space
+     * @return the {@link Cursor} associated with the space
      */
     Cursor getCursor();
 
@@ -51,7 +51,7 @@ public interface Space {
     Coordinate getHome();
 
     /**
-     * Move the cursor to a given {@link Coordinate}
+     * Moves the cursor to a given {@link Coordinate}
      *
      * @param coordinate where to move the cursor
      */

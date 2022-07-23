@@ -40,7 +40,7 @@ public class GridSpace implements Space {
     }
 
     /**
-     * This default constructor calls the other one passing a new default cursor, the position of the home,
+     * This constructor calls the other one passing a new default cursor, the position of the home,
      * the initial rotation of the cursor at 0, and the given width and height
      *
      * @param width width of the space

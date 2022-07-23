@@ -8,8 +8,8 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * This interface just reads the commands from the file as a whole string, then passes to a {@link CommandParser} and returns the list
- * of commands
+ * This interface just reads the commands from the file as a whole string, then passes it to a {@link CommandParser} and
+ * returns the list of commands
  *
  * @author Luca Bianchi
  */
@@ -23,8 +23,8 @@ public interface FileReader {
     CommandParser parser();
 
     /**
-     * This method reads the content from the passed file passed as an argument and uses the parser to return a list
-     * of commands
+     * This method reads the content from the file passed as an argument and uses the parser to return a list
+     * of commands read from the content
      *
      * @param filePath path of the file from which read the string containing the list of commands
      * @return the list of commands returned from the parser
@@ -35,7 +35,8 @@ public interface FileReader {
     List<Command> readCommandsFromFile(Path filePath) throws IOException, InvalidNumberArgumentsException, InvalidCommandException;
 
     /**
-     * This default method just calls the other method passing the path of the given file as an argument
+     * This method just calls the method readCommandsFromFile() that accept a path of the file
+     * passing the path of the given file as an argument
      *
      * @param file from which read the commands
      * @return the list of commands returned from the parser

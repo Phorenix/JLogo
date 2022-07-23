@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jlogo.api.model.commands;
 import it.unicam.cs.pa.jlogo.api.model.Color;
 
 /**
- * This record represents the "SetColorScreen" command, that sets the color of the background of the drawing.
+ * This record represents the "SetColorScreen" command, that sets the {@link Color} of the background of the drawing.
  *
  * @param color new color of the background
  *

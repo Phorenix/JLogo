@@ -1,7 +1,7 @@
 package it.unicam.cs.pa.jlogo.api.model;
 
 /**
- * Simple implementation of a Color interface
+ * Simple implementation of a {@link Color} interface
  *
  * @param red Red color based on the RGB colors
  * @param green Green color based on the RGB colors
@@ -12,7 +12,7 @@ package it.unicam.cs.pa.jlogo.api.model;
 public record RGBColor (int red, int green, int blue) implements Color {
 
     /**
-     * In this constructor is only checked if the given color integers are valid in the RGB format
+     * In this constructor is only checked if the given color integers are valid in the RGB format (in range 0-255)
      *
      * @param red the red color of the RGB color passed
      * @param green the green color of the RGB color passed

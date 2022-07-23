@@ -1,8 +1,7 @@
 package it.unicam.cs.pa.jlogo.api.model;
 
 /**
- * This interface has the responsibility to represent an angle in the space (that will be used as the direction of the
- * cursor).
+ * This interface has the responsibility to represent an angle in the space.
  * In this implementation the angle is an int.
  * This interface also is responsible for rotating the angle (left and right) with the appropriate methods.
  *

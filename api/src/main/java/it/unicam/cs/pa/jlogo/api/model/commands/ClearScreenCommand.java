@@ -8,12 +8,12 @@ package it.unicam.cs.pa.jlogo.api.model.commands;
 public class ClearScreenCommand implements Command {
 
     /*
-     * This implementation of the equals() method just checks if the class is the same
+     * This implementation of the equals() method just checks if the class is the same (the default implementation just
+     * checks if the object in memory is the same)
      */
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        return obj.getClass() == this.getClass();
+        return obj != null && obj.getClass() == this.getClass();
     }
 }

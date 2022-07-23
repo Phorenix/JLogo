@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Default parser for a Logo application.
+ * Default {@link CommandParser} for a Logo application.
  *
  * @author Luca Bianchi
- *
  */
 public class DefaultCommandParser implements CommandParser {
 
@@ -21,19 +20,20 @@ public class DefaultCommandParser implements CommandParser {
 
         List<Command> commandsToReturn = new ArrayList<>();
 
-        // Split every row
-        String[] commands = content.split("\n");
+        // Split every row by using \r\n or \n
+        String[] commands = content.split("\r\n|\n");
 
         // For each row, gets the respective command
         for (String command : commands) {
-            commandsToReturn.add(fromStringToCommand(command.split(" ")));
+            // Splits using " " (space) or
+            commandsToReturn.add(fromStringToCommand(command.split(" |((?<=\\[)|(?=\\[))|((?<=])|(?=]))")));
         }
 
         return commandsToReturn;
     }
 
     /*
-     * Utility method to return a command from an array of strings, assuming that the array has as the first string
+     * Utility method used to return a command from an array of strings, assuming that the array has as the first string
      * the name of the command, and the next strings are the parameters of the command.
      */
     private Command fromStringToCommand(String[] command) throws InvalidNumberArgumentsException, InvalidCommandException {
@@ -152,35 +152,93 @@ public class DefaultCommandParser implements CommandParser {
     }
 
     /*
-     * In this utility method the parser, once checked taken the number of repetitions, it tries to parse the next commands
+     * In this utility method the parser, once taken the number of repetitions, it tries to parse the next commands that
+     * will be part of the repeat command.
      */
     private Command repeatCommand(String[] command) throws InvalidNumberArgumentsException, InvalidCommandException {
-        int num = Integer.parseInt(command[1]);
-        List<Command> commandsRepeat = new ArrayList<>();
+        List<String> trimmedCommand = trimRepeatCommand(command);
+        int num = Integer.parseInt(trimmedCommand.get(1));
+        List<Command> listOfRepeatCommands = new ArrayList<>();
 
-        if (!Objects.equals(command[2], "[") || !Objects.equals(command[command.length - 1], "]"))
+        if (!Objects.equals(trimmedCommand.get(2), "[") || !Objects.equals(trimmedCommand.get(trimmedCommand.size() - 1), "]"))
             throw new InvalidCommandException("Repeat Command must have [ ] to specify the commands to repeat");
 
-        for (int i = 3; i <= command.length - 2;) {
+        for (int i = 3; i <= trimmedCommand.size() - 2; ) {
             List<String> newCommand = new ArrayList<>();
-            if (isWordCommand(command[i])) {
-                newCommand.add(command[i++]);
-                while (!isWordCommand(command[i]) && i < command.length - 1) {
-                    newCommand.add(command[i++]);
-                }
-            }
-            commandsRepeat.add(fromStringToCommand(newCommand.toArray(new String[0])));
+            i += nextCommandOfTheListForRepeatCommand(trimmedCommand, listOfRepeatCommands, newCommand, i);
+            if (listOfRepeatCommands.isEmpty() || !(listOfRepeatCommands.get(listOfRepeatCommands.size() - 1) instanceof RepeatCommand))
+                // Case in which the last command wasn't a new return command, so whatever command it is, it needs to be added
+                listOfRepeatCommands.add(fromStringToCommand(newCommand.toArray(new String[0])));
         }
 
-        return new RepeatCommand(num, commandsRepeat);
+        return new RepeatCommand(num, listOfRepeatCommands);
     }
 
     /*
-     * This utility method check if the given string is a word or not.
+     * This utility method checks if the given string is a word or not.
      */
     private boolean isWordCommand(String string) {
-        // return string.charAt(0) == 'F' || string.charAt(0) == 'B' || string.charAt(0) == 'L' || string.charAt(0) == 'R' || string.charAt(0) == 'C' || string.charAt(0) == 'H' || string.charAt(0) == 'P' || string.charAt(0) == 'S';
         return string.matches("^[a-zA-Z]*$");
+    }
+
+    /*
+     * This method returns an array list from an array of strings of only those strings that have a trimmed length more
+     * than 0
+     */
+    private List<String> trimRepeatCommand(String[] command) {
+        List<String> trimmedCommand = new ArrayList<>();
+
+        for (String s : command) {
+            if (s.trim().length() > 0) trimmedCommand.add(s);
+        }
+
+        return trimmedCommand;
+    }
+
+    /**
+     * This utility method search and creates for the next command that will be part of the list of commands of the
+     * requested repeat command.
+     * It will start to search for a new command in the list command from the int index and so on.
+     * It returns the number of positions that the method has consumed of the command list.
+     *
+     * @param command list of strings containing the commands (and where will be searched the next command)
+     * @param listOfRepeatCommands ending list of commands that will be used to create the new repeat command
+     * @param newCommandForList command (represented as a list of strings) where will be put the new command
+     * @param index int from which positions start to search in the command argument
+     * @return the number of positions that the method has consumed of the command list
+     * @throws InvalidCommandException In case the command passed to the parser is unknown
+     * @throws InvalidNumberArgumentsException In case the command passed to the parser has an incorrect number of arguments
+     */
+    private int nextCommandOfTheListForRepeatCommand(List<String> command, List<Command> listOfRepeatCommands, List<String> newCommandForList, int index) throws InvalidCommandException, InvalidNumberArgumentsException {
+        int newIndex = index;
+
+        if (isWordCommand(command.get(newIndex))) {
+            if (command.get(newIndex).equalsIgnoreCase("ripeti")) {
+                int nextBracket = searchNextBracket(command.subList(newIndex, command.size()));
+                listOfRepeatCommands.add(repeatCommand(command.subList(newIndex, newIndex + nextBracket).toArray(new String[0])));
+                newIndex += nextBracket;
+                return newIndex - index;
+            } else {
+                newCommandForList.add(command.get(newIndex++));
+                while (!isWordCommand(command.get(newIndex)) && newIndex < command.size() - 1) {
+                    newCommandForList.add(command.get(newIndex++));
+                }
+            }
+        }
+
+        return newIndex - index;
+    }
+
+    /*
+     * This utility method is invoked when a new repeat command is found inside another repeat command, so it returns
+     * the index of the second-last closing square bracket "]" + 1.
+     */
+    private int searchNextBracket(List<String> command) throws InvalidCommandException {
+        for (int i = command.size() - 2; i > 0; i--) {
+            if (command.get(i).equals("]")) return i + 1;
+        }
+
+        throw new InvalidCommandException("Error on multiple repeat command");
     }
 
 }

@@ -8,7 +8,6 @@ import java.util.List;
  * This interface has the responsibility to return a list of Commands from the given String read from the file.
  *
  * @author Luca Bianchi
- *
  */
 public interface CommandParser {
 

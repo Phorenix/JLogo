@@ -1,7 +1,7 @@
 package it.unicam.cs.pa.jlogo.api.model.commands;
 
 /**
- * This class represents the "SetPenSize" command
+ * This class represents the "SetPenSize" command (the size is an int)
  *
  * @param size new size of the stroke of the next lines
  *

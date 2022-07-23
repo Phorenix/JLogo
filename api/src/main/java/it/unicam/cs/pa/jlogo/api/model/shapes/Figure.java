@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * This interface represents a possible figure in the drawing.
- * A figure is basically a sequence of lines that close in the starting point of the first line.
+ * A figure is basically a sequence of lines that closes in the starting point of the first line.
  *
  * @author Luca Bianchi
  */

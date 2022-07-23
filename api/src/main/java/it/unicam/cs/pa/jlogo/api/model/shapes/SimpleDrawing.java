@@ -27,11 +27,11 @@ public class SimpleDrawing implements Drawing {
     }
 
     /**
-     * This constructor calls the default one, passing a new empty ArrayList and initialize the background color
+     * This constructor calls the other one, passing a new empty ArrayList and initialize the background color
      * with the color White.
      */
     public SimpleDrawing() {
-        this(new ArrayList<>(), new RGBColor(0, 0, 0));
+        this(new ArrayList<>(), new RGBColor(255, 255, 255));
     }
 
     @Override
@@ -52,6 +52,8 @@ public class SimpleDrawing implements Drawing {
     @Override
     public void addNewLine(Line line, Color fillingColor) {
         shapes.add(line);
+        // Prints the new added Line
+        onAddNewLine(line);
 
         int linesToRemove = 0;
         if ((linesToRemove = checkCreationNewPolygon(fillingColor)) > 0) {
@@ -64,6 +66,7 @@ public class SimpleDrawing implements Drawing {
      * if they don't it just returns 0, if they do it will also create the new Polygon.
      * To do it, it checks from the last line added if they form a new polygon checking the respective ending and starting points.
      *
+     * @param fillingColor filling color of the new polygon if it will be created
      * @return the number of lines to remove (because they belong the new polygon that will be created). It returns 0
      * if the last lines of the list can't form a new polygon.
      */
@@ -75,6 +78,7 @@ public class SimpleDrawing implements Drawing {
             return 0;
         } else {
             this.shapes.add(new Polygon(linesNewPolygon, fillingColor));
+            onAddNewPolygon((Polygon) this.shapes.get(this.shapes.size() - 1));
             return linesNewPolygon.size();
         }
     }
@@ -89,7 +93,7 @@ public class SimpleDrawing implements Drawing {
      */
     private List<Line> linesOfNewPolygon() {
         List<Line> linesOfNewFigure = new ArrayList<>();
-        // Adds the last line added and save the starting point
+        // Adds the last added line and save the starting point
         linesOfNewFigure.add((Line) shapes.get(shapes.size() - 1));
         Coordinate lastStartingPoint = linesOfNewFigure.get(0).startingPoint();
 
@@ -151,12 +155,18 @@ public class SimpleDrawing implements Drawing {
         return false;
     }
 
+    /**
+     * This method remove the last <code>n</code> lines (it leaves the figures)
+     *
+     * @param n number of lines to remove
+     */
     private void removeLastNLines(int n) {
         int removedLines = 0;
 
         for (int i = shapes.size() - 1; i >= 0 && removedLines < n; i--) {
             if (shapes.get(i) instanceof Line) {
-                shapes.remove(i);
+                // Remove and Print the line
+                onRemoveNewLine((Line) shapes.remove(i));
                 removedLines++;
             }
         }

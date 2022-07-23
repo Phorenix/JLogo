@@ -3,10 +3,8 @@ package it.unicam.cs.pa.jlogo.api.model.shapes;
 import it.unicam.cs.pa.jlogo.api.model.Color;
 import it.unicam.cs.pa.jlogo.api.model.Coordinate;
 
-import java.util.Objects;
-
 /**
- * This record represents a straight line in the drawing.
+ * This record represents a straight {@link Line} in the drawing.
  * (This is also a record because once created it shouldn't be changed anymore)
  *
  * @param color color of the line

@@ -9,6 +9,7 @@ package it.unicam.cs.pa.jlogo.api.io;
  *
  */
 public class InvalidNumberArgumentsException extends Exception {
+
     public InvalidNumberArgumentsException(String numArguments) {
         super("Number of arguments should be: " + numArguments);
     }
@@ -16,4 +17,5 @@ public class InvalidNumberArgumentsException extends Exception {
     public InvalidNumberArgumentsException() {
         super("Invalid number of arguments for the command passed");
     }
+
 }

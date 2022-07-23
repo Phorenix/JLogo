@@ -8,15 +8,20 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * Class extending {@link Application}, so it will call the method start() when the javaFX routine takes control of
+ * the execution
+ *
+ * @author Luca Bianchi
+ */
 public class GuiApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/LogoApp.fxml")));
         primaryStage.setTitle("Logo App");
-        // TODO Needs to get the dimensions somewhere
-        primaryStage.setScene(new Scene(root, 600, 600));
-        primaryStage.setResizable(false);
+        // Default dimensions (but is resizable)
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

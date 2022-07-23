@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 public interface ShapeWriter {
 
     /**
-     * Returns the string calculated from the given {@link Shape}
+     * Returns the string representation of the given {@link Shape}
      *
      * @param shape shape of which is needed the string representation
-     * @return the string calculated from the given shape
+     * @return the string representation of the given shape
      */
     String stringOf(Shape shape);
 
@@ -24,7 +24,7 @@ public interface ShapeWriter {
      * This default method takes a list of shapes, but then calls the other method to get the representation for each
      * of the given shapes and lastly returns it as a whole string of all the shapes
      *
-     * @param shapesList list of shapes of which we want the string representation
+     * @param shapesList list of shapes of which is needed the string representation
      * @return the string containing the string representation of all the shapes
      */
     default String stringOf(List<Shape> shapesList) {

@@ -4,7 +4,7 @@ import it.unicam.cs.pa.jlogo.api.model.commands.Command;
 
 /**
  * This interface has the responsibility to represent an "executor" of commands.
- * Basically just gets a new command then execute it, changing the state of the associated objects.
+ * Basically just gets a new command then executes it, changing the state of the associated objects.
  *
  * @author Luca Bianchi
  */

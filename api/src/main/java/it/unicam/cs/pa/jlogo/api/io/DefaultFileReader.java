@@ -13,7 +13,6 @@ import java.util.List;
  * @author Luca Bianchi
  *
  * @param parser the Parser used to parse the commands from the string read from the given file
- *
  */
 public record DefaultFileReader(CommandParser parser) implements FileReader {
 
@@ -21,4 +20,5 @@ public record DefaultFileReader(CommandParser parser) implements FileReader {
     public List<Command> readCommandsFromFile(Path filePath) throws IOException, InvalidNumberArgumentsException, InvalidCommandException {
         return this.parser.parse(Files.readString(filePath));
     }
+
 }
